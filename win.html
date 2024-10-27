@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You Won</title>
+</head>
+<style>
+    .container{
+        display: flex;
+    }
+    .left,.right{
+        width: 20%;
+    }
+    .center{
+        justify-items: center;
+        color: whitesmoke;
+        background-color: dodgerblue;
+        padding: 20px;
+        width: 60%;
+    }
+    h1{
+        font-size: 50px;
+    }
+    p{
+        font-size: 30px;
+    }
+    button{
+        background-color: rgb(30, 147, 244);
+        color: white;
+        border: none;
+        border-bottom:4px solid greenyellow;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    button:hover{
+        background-color: #149cf1;
+        border-bottom:4px solid rgb(203, 245, 141);
+    }
+</style>
+<body>
+    <div class="container">
+        <div class="left"></div>
+        <div class="center">
+            <h1>Congratulations, you won!</h1>
+            <p>Do you want to play again?</p>
+            <button onclick="playAgain()">Play Again</button>
+            <button onclick="quitGame()">Quit</button>
+        </div>
+        <div class="right"></div>
+    </div>
+    <script>
+        function playAgain() {
+            if (window.opener) {
+                window.opener.location.reload();
+            }
+            window.close();
+        }
+        function quitGame() {
+            if (window.opener) {
+                window.opener.close();
+            }
+            window.close();
+        }
+    </script>
+</body>
+</html>

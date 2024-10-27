@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MineSweeper Game</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to bottom right, rgba(0, 102, 204, 0.5), rgba(51, 204, 255, 0.7)),url('2.jpeg') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+        }
+        .container {
+            border: 1px solid red;
+            border-radius: 10px;
+            margin: 5px;
+            padding: 10px;
+            background-color: black;
+            display: grid;
+            gap: 10px;
+        }
+        .cell {
+            border-radius: 5px;
+            background-color: rgb(42, 191, 111);
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid black;
+            font-size: 20px;
+            perspective: 1000px;
+        }
+        .cell-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .flipped .cell-inner {
+            transform: rotateY(180deg);
+        }
+        .cell-front, .cell-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .cell-front {
+            background-color: #1E90FF;
+        }
+        .cell-back {
+            background-color: #FF4500;
+            color: white;
+            transform: rotateY(180deg);
+        }
+        .cell-back.safe {
+            background-color: #00FF7F;
+        }
+    </style>
+</head>
+<body>
+    <h1>MineSweeper Game</h1>
+    <script>
+        let n = parseInt(prompt("Enter value of n in nxn (max 20): "));
+        let randint1 = Math.floor(Math.random() * n * n) + 1;
+        let randint2;
+        do {
+            randint2 = Math.floor(Math.random() * n * n) + 1;
+        } while (randint1 === randint2);
+        let container = document.createElement("div");
+        container.className = "container";
+        container.style.gridTemplateColumns = `repeat(${n}, 1fr)`;
+        container.style.height = "90vh";
+        container.style.width = "90vh";
+        document.body.appendChild(container);
+        let totalSafeCells = (n * n) - 2;
+        for (let i = 0; i < n; i++) {
+            for (let j = 1; j <= n; j++) {
+                let cell = document.createElement("div");
+                cell.className = "cell";
+                let inner = document.createElement("div");
+                inner.className = "cell-inner";
+                let front = document.createElement("div");
+                front.className = "cell-front";
+                let back = document.createElement("div");
+                back.className = "cell-back";
+                let prod = i * n + j;
+                if (prod === randint1 || prod === randint2) {
+                    back.textContent = "X";
+                    cell.setAttribute("data-mine", "true");
+                } else {
+                    back.textContent = prod;
+                    cell.setAttribute("data-mine", "false");
+                }
+                inner.appendChild(front);
+                inner.appendChild(back);
+                cell.appendChild(inner);
+                cell.addEventListener("click", function () {
+                    if (!cell.classList.contains("flipped")) {
+                        cell.classList.add("flipped");
+                        if (cell.getAttribute("data-mine") === "true") {
+                            window.open("lose.html", "_blank", "height=450,width=700").moveBy(415, 200);
+                        } else {
+                            back.classList.add("safe");
+                            totalSafeCells--;
+                            if (totalSafeCells === 0) {
+                                window.open("win.html", "_blank", "height=450,width=700").moveBy(415, 200);
+                            }
+                        }
+                    }
+                });
+                container.appendChild(cell);
+            }
+        }
+    </script>
+    <h5>Made by : Prasann Teradal</h5>
+    <a target="_blank" style="color:white;" href="https://www.linkedin.com/in/prasann-teradal-37b039263/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app">For LinkedIn Profile</a>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You Lost</title>
+</head>
+<style>
+    body{
+        background-color: #000;
+    }
+    div{
+        text-align: center;
+        color: white;
+        background-color: red;
+        border-radius: 10px;
+        padding: 20px;
+    }
+    h1{
+        font-size: 50px;
+    }
+    p{
+        font-size: 30px;
+    }
+    button{
+        background-color: rgb(236, 99, 99);
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    button:hover{
+        background-color: #ff9900;
+    }
+</style>
+<body>
+    <div>
+        <h1>Game Over</h1>
+        <p>Sorry, you lost this round!</p>
+        <p>Do you want to play again?</p>
+        <button onclick="playAgain()">Play Again</button>
+        <button onclick="quitGame()">Quit</button>
+    </div>
+    <script>
+        function playAgain() {
+            if (window.opener) {
+                window.opener.location.reload();
+            }
+            window.close();
+        }
+        function quitGame() {
+            if (window.opener) {
+                window.opener.close();
+            }
+            window.close();
+        }
+    </script>
+</body>
+</html>
